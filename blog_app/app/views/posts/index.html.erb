@@ -1,4 +1,20 @@
 <h1>Posts#index</h1>
 <p>Find me in app/views/posts/index.html.erb</p>
-<%= debug @posts %>
+<div>
+    <%= link_to "New post", new_post_path %>
+</div>
+<div id="posts">
+    <% @posts.each do |post| %>
+        <div>
+        <!-- <%= link_to post.title, post_path(post.id)%> #helper of the route prefixes -->
+            <a href='/posts/<%= post.id %>' style="text-decoration: none; color: inherit; outline: none;">
+                <h1><%= post.title %></h1>
+                <div>
+                    <p><%= post.body %></p>
+                </div>
+            </a>
+        </div>
+    <% end %>
+</div>
+
 

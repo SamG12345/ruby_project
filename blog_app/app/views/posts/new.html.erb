@@ -1,0 +1,20 @@
+<h3>New post</h3>
+<div>
+<%= render "form", post: @post %>
+<%= link_to "Cancel", posts_path %>
+</div>
+
+<%= form_with model: @post do |form|%>
+    <div>
+        <%= form.label :text %>
+        <%= form.text_field :text %>
+    </div>
+
+    <div>
+        <%= form.label :body %>
+        <%= form.textarea :body %>
+    </div>
+    <div>
+        <%= form.submit %>
+    </div>
+<% end %>
