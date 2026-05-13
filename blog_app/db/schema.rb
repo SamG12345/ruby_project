@@ -10,11 +10,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_11_121951) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_13_172014) do
+  create_table "comments", force: :cascade do |t|
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.integer "parent_id"
+    t.integer "post_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["parent_id"], name: "index_comments_on_parent_id"
+    t.index ["post_id"], name: "index_comments_on_post_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
     t.string "title"
     t.datetime "updated_at", null: false
   end
+
+  create_table "test_posts", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "txt"
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tests", force: :cascade do |t|
+    t.string "conetxt"
+    t.datetime "created_at", null: false
+    t.integer "parent_id"
+    t.integer "testable_id", null: false
+    t.string "testable_type", null: false
+    t.datetime "updated_at", null: false
+    t.index ["parent_id"], name: "index_tests_on_parent_id"
+    t.index ["testable_type", "testable_id"], name: "index_tests_on_testable"
+  end
+
+  add_foreign_key "comments", "posts"
+  add_foreign_key "tests", "tests", column: "parent_id", on_delete: :cascade
 end

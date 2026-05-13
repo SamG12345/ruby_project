@@ -25,6 +25,11 @@ Rails.application.routes.draw do
   put "/posts/:id", to: "posts#update"
 
   delete "/posts/:id", to: "posts#destroy"
+
+  # comments and replies
+  post "/posts/:post_id/comment", to: "posts#comment", as: "comments"
+  get "/posts/:post_id/comments/:id", to: "posts#comment_show", as: "comment"
+  post "/posts/:post_id/comments/:id/reply", to: "posts#reply"
   
   #resources :"posts"
 end

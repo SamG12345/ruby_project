@@ -6,11 +6,33 @@
     <div>
         <%= button_to "Delete", @post,  method: :delete, data: { turbo_confirm: "Are you sure?" } %>
     </div>
-    
+
     <div>
-        <h1> <%= @post.title %> </h1>
+        <div>
+            <h1> <%= @post.title %> </h1>
+        </div>
+        <div>
+            <a> <%= @post.body %> </h1>
+        </div>
     </div>
     <div>
-        <a> <%= @post.body %> </h1>
+        <%= form_with(model: Comment.new, url: comments_path(@post)) do |comment| %>
+            <%= comment.label :comment %>
+            <br>
+            <%= comment.text_field :body %>
+            <%= comment.submit 'comment' %>
+        <% end %>
     </div>
+    <div>
+            <% @comments.each do |comment| %>
+                <div>
+                    <a href='/posts/<%= @post.id %>/comments/<%=comment.id%>'>
+                        <%= comment.body %>
+                    </a>
+                </div>
+            <% end %>
+
+    </div>
+
+
 </div>

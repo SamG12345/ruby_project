@@ -10,6 +10,7 @@ class PostsController < ApplicationController
   # This Function shows a particualr Post of a paticula id
   def show
     #@post = Post.find(params[:id]) # using before_action to implement DRY
+    @comments = Comment.where(post_id: params[:id]).all
   end
 
   # This Function shows new Post
@@ -20,8 +21,6 @@ class PostsController < ApplicationController
   # This function created new Post
   def create
     @post = Post.new(post_params)
-    print @post
-    print post_params
     if @post.save
       redirect_to @post
     else
@@ -52,6 +51,27 @@ class PostsController < ApplicationController
     else
       render :destroy, status: :unprocessable_entity
     end
+  end
+
+  # Function to add comment
+  def comment
+    @post = Post.find(params[:post_id])
+    @parm = params.require(:comment).permit(:body)
+    if @post.comments.create!(@parm)
+      redirect_to @post
+    else
+      render :comment, status: :unprocessable_entity
+    end
+  end
+
+  def comment_show
+    #@comment = Comment.where(id: params[:id], post_id: params[:post_id])
+    @comment = Comment.find(params[:post_id])
+  end
+
+  # Function to add Reply
+  def reply
+    puts params
   end
 
   # Private function to check params. Used in function create, update
