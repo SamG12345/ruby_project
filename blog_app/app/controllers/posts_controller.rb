@@ -20,6 +20,8 @@ class PostsController < ApplicationController
   # This function created new Post
   def create
     @post = Post.new(post_params)
+    print @post
+    print post_params
     if @post.save
       redirect_to @post
     else
@@ -55,7 +57,7 @@ class PostsController < ApplicationController
   # Private function to check params. Used in function create, update
   private
   def post_params
-    params.expects(post: [:title, :body])
+    params.require(:post).permit(:title, :body)
   end
 
   def set_post
